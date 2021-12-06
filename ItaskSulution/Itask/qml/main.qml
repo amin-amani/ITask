@@ -13,6 +13,12 @@ Rectangle {
         currentIndex: 0
 
         Page1Form {
+        DraggableRect
+        {
+
+
+        }
+
         }
 
         Page2Form {
