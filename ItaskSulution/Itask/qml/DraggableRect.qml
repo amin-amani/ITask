@@ -7,9 +7,10 @@ import QtQuick 2.0
     Rectangle {
         property color backGroundColor: "red"
         property int rectWidth: 80
+        property int rectID: 1
         property int rectHeight: 120
         signal rectClicked()
-        signal rectDragFinished(int x,int y)
+        signal rectDragFinished(int x,int y,variant obj)
         id:draggable
         width: rectWidth;
         height: rectHeight;
@@ -30,7 +31,7 @@ import QtQuick 2.0
             onReleased:
             {
 
-                rectDragFinished(draggable.x,draggable.y)
+                rectDragFinished(draggable.x,draggable.y,rectID)
             }
 
 
