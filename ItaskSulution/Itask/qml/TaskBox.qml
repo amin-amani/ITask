@@ -12,7 +12,7 @@ GridLayout{
     ListModel {
         id: objectsModel
     }
-    //=====================================================================
+//=====================================================================
     function orderX(selectedObject,selectedWidth)
     {
         if(selectedObject.x< selectedWidth/6)
@@ -24,22 +24,36 @@ GridLayout{
             selectedObject.x=2*selectedWidth/3
         }
     }
-    //=====================================================================
+//=====================================================================
     function orderY(selectedObject)
     {
       selectedObject.y=selectedObject.y-(selectedObject.y%selectedObject.height);
     }
-    //=====================================================================
+//=====================================================================
     function refreshTaskTable(x,y,id)
     {
+        var selectedObject
+
         for (var i=0;i<taskGrid.children.length;i++)
         {
             if(  taskGrid.children[i].objectName.includes(objectsModel.get(id).objectName)){
-
-                orderX(taskGrid.children[i],taskGrid.width)
-                orderY(taskGrid.children[i])
+                selectedObject=taskGrid.children[i]
+                orderX(selectedObject,taskGrid.width)
+                orderY(selectedObject)
             }
         }
+
+
+        for ( i=0;i<taskGrid.children.length;i++)
+        {
+
+           if(selectedObject.x ===taskGrid.children[i].x && selectedObject.y === taskGrid.children[i].y
+                   && objectsModel.get(id).objectName!= selectedObject.objectName  )
+           {
+               console.log("same location")
+           }
+          }
+
     }
 //=====================================================================
 function createTask()
@@ -57,11 +71,10 @@ function createTask()
         object.x = (object.width + 10) * i;
         object.rectID=i
         object.objectName="aa"+i
-
         object.onRectDragFinished.connect(refreshTaskTable)
         objectsModel.append(object)
-
-}}
+                               }
+}
 //=====================================================================
     Text {
 
@@ -69,15 +82,12 @@ function createTask()
         MouseArea
         {
         anchors.fill: parent
-
         }
     }
     Text {
-
         text: qsTr("Doing")
     }
     Text {
-
         text: qsTr("Done")
     }
     Component.onCompleted: {
