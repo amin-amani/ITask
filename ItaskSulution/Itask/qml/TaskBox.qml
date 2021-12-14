@@ -12,43 +12,36 @@ GridLayout{
     ListModel {
         id: objectsModel
     }
-    function order(selectedObject,selectedWidth)
+    //=====================================================================
+    function orderX(selectedObject,selectedWidth)
     {
- console.log(selectedWidth)
         if(selectedObject.x< selectedWidth/6)
-            selectedObject.x=0;
+            selectedObject.x=0
         else if(selectedObject.x>selectedWidth/ 6 && selectedObject.x<3*selectedWidth/ 6 )
             selectedObject.x=selectedWidth/3
         else
-        {selectedObject.x=2*selectedWidth/3
-
+        {
+            selectedObject.x=2*selectedWidth/3
         }
-
     }
-
+    //=====================================================================
+    function orderY(selectedObject)
+    {
+      selectedObject.y=selectedObject.y-(selectedObject.y%selectedObject.height);
+    }
+    //=====================================================================
     function refreshTaskTable(x,y,id)
     {
-
         for (var i=0;i<taskGrid.children.length;i++)
         {
-
             if(  taskGrid.children[i].objectName.includes(objectsModel.get(id).objectName)){
 
-
-                order(taskGrid.children[i],taskGrid.width)
-//                var selectedObject= taskGrid.children[i]
-//                if(selectedObject.x< mainForm.width/6)
-//                    taskGrid.children[i].x=0;
-//                else if(selectedObject.x>mainForm.width/ 6 && x<3*mainForm.width/ 6 )
-//                    selectedObject.x=mainForm.width/3
-//                else
-//                    selectedObject.x=2*mainForm.width/3
-
+                orderX(taskGrid.children[i],taskGrid.width)
+                orderY(taskGrid.children[i])
             }
         }
-
     }
-
+//=====================================================================
 function createTask()
 {
     var component = Qt.createComponent("DraggableRect.qml");
@@ -60,6 +53,7 @@ function createTask()
                                             );
 
         object.width=taskGrid.width/3
+        object.height=object.width*2/3
         object.x = (object.width + 10) * i;
         object.rectID=i
         object.objectName="aa"+i
@@ -68,7 +62,7 @@ function createTask()
         objectsModel.append(object)
 
 }}
-
+//=====================================================================
     Text {
 
         text: qsTr("ToDo")
