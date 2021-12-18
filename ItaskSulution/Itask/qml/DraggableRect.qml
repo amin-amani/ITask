@@ -1,11 +1,6 @@
 import QtQuick 2.0
-
-
-//Item {
-
-
 Rectangle {
-    property color backGroundColor: "red"
+    property color backGroundColor: "orange"
     property int rectWidth: 80
     property int rectID: 1
     property int rectHeight: 120
@@ -15,14 +10,22 @@ Rectangle {
     height: rectHeight;
     color: backGroundColor
     Drag.active: dragArea.drag.active
-    border.color: "black"
+
     function setPos(xs,ys)
     {
         x=xs
         y=ys
     }
-    //Drag.hotSpot.x: 10
-    ///Drag.hotSpot.y: 10
+
+    Rectangle
+    {
+        anchors.centerIn: parent
+        width: parent.width-20
+        height:  parent.height-20
+        radius: 5
+        clip: true
+        color: "red"
+    }
     MouseArea
     {
         id:dragArea
@@ -38,13 +41,6 @@ Rectangle {
             rectDragFinished(parent.x,parent.y,rectID)
         }
 
-
-
-
     }
 
-
-
 }
-
-//}

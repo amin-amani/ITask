@@ -6,21 +6,23 @@ Rectangle {
     id:mainForm
     width: 640
     height: 480
+    color: "transparent"
+    TaskBox
+    {
+
+    }
    // anchors.fill: parent
      //========================================================================================
-    SwipeView {
-        id: swipeView
-        anchors.fill: parent
-        currentIndex: 0
-        Page1Form {
-            id:mainPage
+//    SwipeView {
+//        id: swipeView
+//        anchors.fill: parent
+//        currentIndex: 0
+//        Page1Form {
+//            id:mainPage
 
-            TaskBox
-            {
 
-            }
-        }
-        Page2Form {
-        }
-    }
+//        }
+//        Page2Form {
+//        }
+//    }
 }

@@ -6,15 +6,19 @@ GridLayout{
     id:taskGrid
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.fill: parent
-
     rows: 3
     height:100
     ListModel {
         id: objectsModel
     }
+    Rectangle
+    {
+        id:test
+    }
 //=====================================================================
     function orderX(selectedObject,selectedWidth)
     {
+
         if(selectedObject.x< selectedWidth/6)
             selectedObject.x=0
         else if(selectedObject.x>selectedWidth/ 6 && selectedObject.x<3*selectedWidth/ 6 )
@@ -33,7 +37,6 @@ GridLayout{
     function refreshTaskTable(x,y,id)
     {
         var selectedObject
-
         for (var i=0;i<taskGrid.children.length;i++)
         {
             if(  taskGrid.children[i].objectName.includes(objectsModel.get(id).objectName)){
@@ -42,13 +45,11 @@ GridLayout{
                 orderY(selectedObject)
             }
         }
-
-
         for ( i=0;i<taskGrid.children.length;i++)
         {
 
            if(selectedObject.x ===taskGrid.children[i].x && selectedObject.y === taskGrid.children[i].y
-                   && objectsModel.get(id).objectName!= selectedObject.objectName  )
+                   && objectsModel.get(id).objectName!== selectedObject.objectName  )
            {
                console.log("same location")
            }
@@ -63,16 +64,21 @@ function createTask()
         var object = component.createObject(taskGrid,
                                             {
                                                 backGroundColor: "orange",
-                                            }
+                                                                               }
                                             );
 
         object.width=taskGrid.width/3
         object.height=object.width*2/3
         object.x = (object.width + 10) * i;
         object.rectID=i
-        object.objectName="aa"+i
+        object.objectName="aa"+i;
+        object.parent=taskGrid
+
+
         object.onRectDragFinished.connect(refreshTaskTable)
         objectsModel.append(object)
+
+
                                }
 }
 //=====================================================================
