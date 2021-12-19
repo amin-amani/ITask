@@ -6,10 +6,13 @@ Rectangle {
     property int rectHeight: 120
     signal rectClicked()
     signal rectDragFinished(int x,int y,variant obj)
+    id:mainRect
     width: rectWidth;
     height: rectHeight;
     color: backGroundColor
+    objectName: "a1"
     Drag.active: dragArea.drag.active
+
 
     function setPos(xs,ys)
     {
@@ -38,7 +41,7 @@ Rectangle {
         onReleased:
         {
 
-            rectDragFinished(parent.x,parent.y,rectID)
+            rectDragFinished(parent.x,parent.y,mainRect.objectName)
         }
 
     }

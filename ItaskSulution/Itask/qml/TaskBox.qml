@@ -8,9 +8,7 @@ GridLayout{
     anchors.fill: parent
     rows: 3
     height:100
-    ListModel {
-        id: objectsModel
-    }
+
     Rectangle
     {
         id:test
@@ -34,12 +32,12 @@ GridLayout{
       selectedObject.y=selectedObject.y-(selectedObject.y%selectedObject.height);
     }
 //=====================================================================
-    function refreshTaskTable(x,y,id)
+    function refreshTaskTable(x,y,objectName)
     {
-        var selectedObject
+            var selectedObject
         for (var i=0;i<taskGrid.children.length;i++)
         {
-            if(  taskGrid.children[i].objectName.includes(objectsModel.get(id).objectName)){
+            if(  taskGrid.children[i].objectName.includes(objectName)){
                 selectedObject=taskGrid.children[i]
                 orderX(selectedObject,taskGrid.width)
                 orderY(selectedObject)
@@ -49,7 +47,7 @@ GridLayout{
         {
 
            if(selectedObject.x ===taskGrid.children[i].x && selectedObject.y === taskGrid.children[i].y
-                   && objectsModel.get(id).objectName!== selectedObject.objectName  )
+                   && objectName!== selectedObject.objectName  )
            {
                console.log("same location")
            }
@@ -59,25 +57,20 @@ GridLayout{
 //=====================================================================
 function createTask()
 {
-    var component = Qt.createComponent("DraggableRect.qml");
+    var component = Qt.createComponent("qrc:/DraggableRect.qml");
     for (var i=0; i<5; i++) {
         var object = component.createObject(taskGrid,
                                             {
-                                                backGroundColor: "orange",
-                                                                               }
+                                             backGroundColor: "orange",
+                                            }
                                             );
-
         object.width=taskGrid.width/3
         object.height=object.width*2/3
         object.x = (object.width + 10) * i;
         object.rectID=i
-        object.objectName="aa"+i;
+        object.objectName="taskBox"+i;
         object.parent=taskGrid
-
-
         object.onRectDragFinished.connect(refreshTaskTable)
-        objectsModel.append(object)
-
 
                                }
 }
